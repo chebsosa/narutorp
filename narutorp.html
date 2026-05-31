@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>NarutoRP - Chargement</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: #06060e;
+            color: #e6e6f0;
+            font-family: 'Tahoma', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Arrière-plan assombri */
+        .overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(10, 10, 18, 0.75);
+            z-index: 1;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: space-between;
+        }
+
+        .header {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            font-weight: 900;
+            color: #ff9b28;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 0 0 15px rgba(220, 90, 20, 0.6);
+        }
+
+        .header p {
+            color: #8c8c94;
+            font-size: 14px;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        /* Barre de chargement en bas */
+        .footer {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 50px auto;
+        }
+
+        .status {
+            font-size: 14px;
+            color: #8c8c94;
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: rgba(15, 15, 28, 0.8);
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid rgba(55, 55, 85, 0.5);
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: #dc5a14;
+            box-shadow: 0 0 10px #ff9b28;
+            transition: width 0.2s ease-out;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <audio id="ost" autoplay loop>
+        <source src="https://raw.githubusercontent.com/chebsosa/narutorp/main/Naruto%20-%20Afternoon%20of%20Konoha.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="content">
+        <div class="header">
+            <h1>NINJA WORLD</h1>
+            <p>Préparation du monde des Shinobis...</p>
+        </div>
+
+        <div class="footer">
+            <div id="status-text" class="status">Connexion en cours...</div>
+            <div class="progress-bar">
+                <div id="progress-file" class="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Gestion de la musique (GMod baisse parfois le volume)
+        var audio = document.getElementById("ost");
+        if(audio) { audio.volume = 0.5; } // Volume à 50%
+
+        // Système de détection de fichiers natif de Garry's Mod
+        var totalFiles = 1;
+        var neededFiles = 1;
+
+        function SetFilesNeeded(needed) {
+            neededFiles = needed;
+            totalFiles = Math.max(totalFiles, needed);
+            updateProgress();
+        }
+
+        function SetFilesRemaining(remaining) {
+            neededFiles = remaining;
+            updateProgress();
+        }
+
+        function DownloadingFile(fileName) {
+            document.getElementById("status-text").innerHTML = "Téléchargement : " + fileName;
+        }
+
+        function SetStatusChanged(status) {
+            document.getElementById("status-text").innerHTML = status;
+        }
+
+        function updateProgress() {
+            var sent = totalFiles - neededFiles;
+            var percentage = Math.floor((sent / totalFiles) * 100);
+            document.getElementById("progress-file").style.width = percentage + "%";
+        }
+
+        // IMAGE DE FOND ALÉATOIRE : Tu pourras mettre tes images ici
+        var backgrounds = [
+            "https://tes-fichiers.com/fond1.jpg",
+            "https://tes-fichiers.com/fond2.jpg",
+            "https://tes-fichiers.com/fond3.jpg"
+        ];
+        var randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+        document.body.style.backgroundImage = "url('" + randomBg + "')";
+    </script>
+</body>
+</html>
