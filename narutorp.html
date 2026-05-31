@@ -232,7 +232,7 @@
                         Une mystérieuse faction sans allégeance commence à faire parler d'elle, orchestrant des incidents aux frontières pour briser l'équilibre précaire entre Konoha, Suna et les autres contrées.
                     </p>
                     <p class="lore-paragraph">
-                        Ici, votre destin n'attend que vous. Deviendrez-vous le rempart protecteur de votre patrie, un ninja médical respecté, ou un déserteur redouté consommé par la vengeance ? Forgez votre propre nindo.
+                        Ici, votre destiny n'attend que vous. Deviendrez-vous le rempart protecteur de votre patrie, un ninja médical respecté, ou un déserteur redouté consommé par la vengeance ? Forgez votre propre nindo.
                     </p>
                 </div>
             </div>
@@ -245,10 +245,12 @@
                     <!-- Fondateur 1 -->
                     <div class="card">
                         <div class="avatar-container">
-                            <img src="https://discordlookup.com/api/v1/user/1250216139775016980/avatar" alt="Avatar Fondateur 1">
+                            <!-- METTRE LE LIEN DE VOTRE IMAGE D'AVATAR DISCORD ICI -->
+                            <img src="https://images.vcdn.be/v2/v2-identity-avatar-placeholder.png" id="avatar1" alt="Avatar Fondateur 1">
                         </div>
                         <div class="card-info">
-                            <h3>Fondateur 1</h3>
+                            <!-- REMPLACER PAR LE VRAI PSEUDO DISCORD -->
+                            <h3 id="name1">Pseudo_Discord_1</h3>
                             <p>Fondateur / Développeur</p>
                         </div>
                     </div>
@@ -256,10 +258,12 @@
                     <!-- Fondateur 2 -->
                     <div class="card">
                         <div class="avatar-container">
-                            <img src="https://discordlookup.com/api/v1/user/1387497342353018891/avatar" alt="Avatar Fondateur 2">
+                            <!-- METTRE LE LIEN DE VOTRE IMAGE D'AVATAR DISCORD ICI -->
+                            <img src="https://images.vcdn.be/v2/v2-identity-avatar-placeholder.png" id="avatar2" alt="Avatar Fondateur 2">
                         </div>
                         <div class="card-info">
-                            <h3>Fondateur 2</h3>
+                            <!-- REMPLACER PAR LE VRAI PSEUDO DISCORD -->
+                            <h3 id="name2">Pseudo_Discord_2</h3>
                             <p>Fondateur / Gestion</p>
                         </div>
                     </div>
@@ -282,11 +286,32 @@
     </div>
 
     <script>
-        // Gestion audio
-        var audio = document.getElementById("ost");
-        if(audio) { audio.volume = 0.4; } // Volume à 40%
+        // --- CONFIGURATION DE VOS COMPTES DISCORD ---
+        // Remplacez les valeurs ci-dessous par vos vrais pseudos et les liens de vos avatars.
+        // Astuce pour l'avatar : Faites un clic droit sur votre avatar Discord -> "Copier le lien de l'image"
+        
+        const fondateur1 = {
+            pseudo: "MonPseudo1", 
+            avatarUrl: "https://cdn.discordapp.com/avatars/1250216139775016980/votre_image_id.png" 
+        };
 
-        // Détection de chargement GMod
+        const fondateur2 = {
+            pseudo: "MonPseudo2",
+            avatarUrl: "https://cdn.discordapp.com/avatars/1387497342353018891/votre_image_id.png"
+        };
+
+        // Application des données dans la page
+        document.getElementById("name1").innerText = fondateur1.pseudo;
+        document.getElementById("avatar1").src = fondateur1.avatarUrl;
+
+        document.getElementById("name2").innerText = fondateur2.pseudo;
+        document.getElementById("avatar2").src = fondateur2.avatarUrl;
+
+
+        // --- CODE DE CHARGEMENT DE L'ECRAN (GMOD) ---
+        var audio = document.getElementById("ost");
+        if(audio) { audio.volume = 0.4; }
+
         var totalFiles = 1;
         var neededFiles = 1;
 
@@ -315,7 +340,6 @@
             document.getElementById("progress-file").style.width = percentage + "%";
         }
 
-        // FONDS D'ÉCRAN AUTOMATIQUES HAUTE DÉFINITION
         var backgrounds = [
             "https://images.alphacoders.com/605/605584.jpg",
             "https://images.alphacoders.com/134/1344604.png",
