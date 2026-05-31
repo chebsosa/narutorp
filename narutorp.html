@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>NarutoRP - Chargement Immersif</title>
+
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
+
         body {
             background: #06060e;
             color: #e6e6f0;
@@ -21,7 +24,6 @@
             background-repeat: no-repeat;
         }
 
-        /* Ambiance et dégradé cinématique */
         .overlay {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -40,11 +42,11 @@
             justify-content: space-between;
         }
 
-        /* Zone Supérieure : Titre */
         .header {
             text-align: center;
             margin-top: 10px;
         }
+
         .header h1 {
             font-size: 56px;
             font-weight: 900;
@@ -53,6 +55,7 @@
             letter-spacing: 6px;
             text-shadow: 0 0 25px rgba(220, 90, 20, 0.5);
         }
+
         .header p {
             color: #a0a0b0;
             font-size: 14px;
@@ -61,7 +64,6 @@
             letter-spacing: 2px;
         }
 
-        /* Zone Centrale : Séparée en 2 colonnes */
         .main-panels {
             display: flex;
             justify-content: space-between;
@@ -92,69 +94,50 @@
             letter-spacing: 1px;
             border-bottom: 2px solid rgba(220, 90, 20, 0.3);
             padding-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
-        /* Colonne de gauche : Histoire */
         .lore-container {
             overflow-y: auto;
             font-size: 15px;
             line-height: 1.7;
             color: #d1d1e0;
-            padding-right: 10px;
-        }
-        .lore-container::-webkit-scrollbar {
-            width: 4px;
-        }
-        .lore-container::-webkit-scrollbar-thumb {
-            background: rgba(220, 90, 20, 0.4);
-            border-radius: 2px;
-        }
-        .lore-paragraph {
-            margin-bottom: 15px;
         }
 
-        /* Colonne de droite : Fondateurs */
         .founders-list {
             display: flex;
             flex-direction: column;
             gap: 20px;
-            justify-content: center;
-            height: 100%;
         }
+
         .card {
             background: rgba(25, 25, 45, 0.5);
             border-left: 4px solid #dc5a14;
             border-radius: 8px;
             padding: 15px 20px;
             display: flex;
-            align-items: center;
             gap: 15px;
-            transition: transform 0.2s;
-            position: relative;
+            align-items: center;
         }
+
         .avatar-wrapper {
             position: relative;
             width: 50px;
             height: 50px;
         }
+
         .avatar-container {
             width: 100%;
             height: 100%;
             border-radius: 50%;
             overflow: hidden;
-            border: 2px solid rgba(255, 155, 40, 0.4);
-            background: #111224;
         }
+
         .avatar-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        
-        /* Pastille de statut Discord */
+
         .status-dot {
             position: absolute;
             bottom: 0;
@@ -162,238 +145,169 @@
             width: 14px;
             height: 14px;
             border-radius: 50%;
+            background: #747f8d;
             border: 2px solid #19192d;
-            background: #747f8d; /* Par défaut gris (hors ligne) */
         }
+
         .status-dot.online { background: #43b581; }
         .status-dot.idle { background: #faa61a; }
         .status-dot.dnd { background: #f04747; }
 
-        .card-info {
-            flex-grow: 1;
-        }
         .card-info h3 {
             font-size: 18px;
-            color: #ffffff;
-            margin-bottom: 2px;
-        }
-        .card-info p {
-            font-size: 12px;
-            color: #8c8c94;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .discord-tag {
-            font-size: 11px;
-            color: #ff9b28;
-            display: block;
-            text-transform: none;
-            margin-top: 2px;
         }
 
-        /* Zone Inférieure : Chargement GMod */
-        .footer {
-            width: 100%;
-            max-width: 900px;
-            margin: 0 auto;
+        .discord-section {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
         }
-        .status {
-            font-size: 13px;
-            color: #a0a0b0;
-            margin-bottom: 8px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            text-align: center;
+
+        .discord-card {
+            width: 520px;
+            min-height: 95px;
+            background: rgba(88,101,242,0.18);
+            border: 2px solid rgba(88,101,242,0.45);
+            border-radius: 999px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 15px 30px;
+            text-decoration: none;
+            backdrop-filter: blur(12px);
+            transition: 0.25s;
         }
-        .progress-container {
-            background: rgba(10, 10, 18, 0.9);
-            border: 1px solid rgba(55, 55, 85, 0.4);
-            border-radius: 30px;
-            padding: 4px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+
+        .discord-card:hover {
+            transform: scale(1.04);
+            background: rgba(88,101,242,0.28);
         }
-        .progress-bar {
-            width: 100%;
-            height: 14px;
-            background: transparent;
-            border-radius: 30px;
-            overflow: hidden;
+
+        .discord-icon {
+            width: 60px;
+            height: 60px;
+            background: #5865F2;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .progress-fill {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(90deg, #dc5a14, #ff9b28);
-            box-shadow: 0 0 15px #ff9b28;
-            border-radius: 30px;
-            transition: width 0.3s ease-out;
+
+        .discord-icon img {
+            width: 30px;
+            filter: brightness(0) invert(1);
+        }
+
+        .discord-info h3 {
+            color: white;
+            font-size: 22px;
+        }
+
+        .discord-info p {
+            color: #d8dcff;
+            font-size: 14px;
         }
     </style>
 </head>
+
 <body>
 
-    <div class="overlay"></div>
+<div class="overlay"></div>
 
-    <audio id="ost" autoplay loop>
-        <source src="https://raw.githubusercontent.com/chebsosa/narutorp/main/Naruto%20-%20Afternoon%20of%20Konoha.mp3" type="audio/mpeg">
-    </audio>
+<div class="content">
 
-    <div class="content">
-        
-        <div class="header">
-            <h1>NINJA WORLD</h1>
-            <p>Une nouvelle ère shinobi commence</p>
-        </div>
-
-        <div class="main-panels">
-            
-            <div class="panel">
-                <h2>📜 Chroniques du Serveur</h2>
-                <div class="lore-container">
-                    <p class="lore-paragraph">
-                        Après des décennies de guerres incessantes et sanglantes, un calme fragile s'est installé sur les grandes nations shinobi. Les villages cachés pansent leurs blessures, mais dans l'ombre, les tensions politiques renaissent.
-                    </p>
-                    <p class="lore-paragraph">
-                        Une mystérieuse faction sans allégeance commence à faire parler d'elle, orchestrant des incidents aux frontières pour briser l'équilibre précaire entre Konoha, Suna et les autres contrées.
-                    </p>
-                    <p class="lore-paragraph">
-                        Ici, votre destin n'attend que vous. Deviendrez-vous le rempart protecteur de votre patrie, un ninja médical respecté, ou un déserteur redouté consommé par la vengeance ? Forgez votre propre nindo.
-                    </p>
-                </div>
-            </div>
-
-            <div class="panel">
-                <h2>👥 Équipe Fondatrice</h2>
-                <div class="founders-list">
-                    
-                    <div class="card">
-                        <div class="avatar-wrapper">
-                            <div class="avatar-container">
-                                <img id="avatar-1" src="" alt="Avatar">
-                            </div>
-                            <div id="status-1" class="status-dot"></div>
-                        </div>
-                        <div class="card-info">
-                            <h3 id="name-1">Grimace</h3>
-                            <p>Fondateur / Modéliseur / Dev <span id="tag-1" class="discord-tag"></span></p>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="avatar-wrapper">
-                            <div class="avatar-container">
-                                <img id="avatar-2" src="" alt="Avatar">
-                            </div>
-                            <div id="status-2" class="status-dot"></div>
-                        </div>
-                        <div class="card-info">
-                            <h3 id="name-2">Laiz</h3>
-                            <p>Fondateur / Mapper / Dev <span id="tag-2" class="discord-tag"></span></p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
-
-        <div class="footer">
-            <div id="status-text" class="status">Initialisation des sceaux de connexion...</div>
-            <div class="progress-container">
-                <div class="progress-bar">
-                    <div id="progress-file" class="progress-fill"></div>
-                </div>
-            </div>
-        </div>
-
+    <div class="header">
+        <h1>NINJA WORLD</h1>
+        <p>Une nouvelle ère shinobi commence</p>
     </div>
 
-    <script>
-        // =========================================================
-        //  CONFIGURATIONS : METTEZ VOS IDS DISCORD ICI !
-        // =========================================================
-        const DISCORD_ID_1 = "1250216139775016980"; // Remplace si nécessaire
-        const DISCORD_ID_2 = "1387497342353018891"; // Remplace si nécessaire
-        // =========================================================
+    <div class="main-panels">
 
-        // Fonction pour récupérer les vrais profils en direct
-        function fetchDiscordUser(userId, num) {
-            fetch(`https://api.lanyard.rest/v1/users/${userId}`)
-                .then(response => response.json())
-                .then(res => {
-                    if (res.success && res.data) {
-                        const user = res.data.discord_user;
-                        const status = res.data.discord_status;
-                        
-                        // Pseudo complet ou Display Name
-                        document.getElementById(`name-${num}`).innerText = user.global_name || user.username;
-                        document.getElementById(`tag-${num}`).innerText = `@${user.username}`;
-                        
-                        // Avatar dynamique officiel
-                        if (user.avatar) {
-                            const isGif = user.avatar.startsWith("a_");
-                            const ext = isGif ? "gif" : "png";
-                            document.getElementById(`avatar-${num}`).src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${ext}?size=128`;
-                        } else {
-                            // Avatar par défaut si pas d'avatar personnalisé
-                            document.getElementById(`avatar-${num}`).src = "https://cdn.discordapp.com/embed/avatars/0.png";
-                        }
+        <div class="panel">
+            <h2>📜 Chroniques du Serveur</h2>
+            <div class="lore-container">
+                <p>Après des décennies de guerres...</p>
+            </div>
+        </div>
 
-                        // Statut en direct (en ligne, ne pas déranger etc.)
-                        const statusDot = document.getElementById(`status-${num}`);
-                        statusDot.className = "status-dot " + status;
-                    }
-                })
-                .catch(err => {
-                    console.error("Erreur Lanyard:", err);
-                    document.getElementById(`name-${num}`).innerText = "Erreur de chargement";
-                });
-        }
+        <div class="panel">
+            <h2>👥 Équipe Fondatrice</h2>
 
-        // Lancement de la récupération automatique
-        fetchDiscordUser(DISCORD_ID_1, 1);
-        fetchDiscordUser(DISCORD_ID_2, 2);
+            <div class="founders-list">
 
-        // --- GMOD LOADING SCRIPTS ---
-        var audio = document.getElementById("ost");
-        if(audio) { audio.volume = 0.4; }
+                <div class="card">
+                    <div class="avatar-wrapper">
+                        <div class="avatar-container">
+                            <img id="avatar-1">
+                        </div>
+                        <div id="status-1" class="status-dot"></div>
+                    </div>
+                    <div class="card-info">
+                        <h3 id="name-1">Grimace</h3>
+                        <p>Fondateur</p>
+                    </div>
+                </div>
 
-        var totalFiles = 1;
-        var neededFiles = 1;
+                <div class="card">
+                    <div class="avatar-wrapper">
+                        <div class="avatar-container">
+                            <img id="avatar-2">
+                        </div>
+                        <div id="status-2" class="status-dot"></div>
+                    </div>
+                    <div class="card-info">
+                        <h3 id="name-2">Laiz</h3>
+                        <p>Fondateur</p>
+                    </div>
+                </div>
 
-        function SetFilesNeeded(needed) {
-            neededFiles = needed;
-            totalFiles = Math.max(totalFiles, needed);
-            updateProgress();
-        }
+            </div>
+        </div>
+    </div>
 
-        function SetFilesRemaining(remaining) {
-            neededFiles = remaining;
-            updateProgress();
-        }
+    <!-- DISCORD -->
+    <div class="discord-section">
+        <a class="discord-card" href="https://discord.gg/G6mhzgqNGT" target="_blank">
 
-        function DownloadingFile(fileName) {
-            document.getElementById("status-text").innerHTML = "Téléchargement du parchemin : " + fileName;
-        }
+            <div class="discord-icon">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg">
+            </div>
 
-        function SetStatusChanged(status) {
-            document.getElementById("status-text").innerHTML = status;
-        }
+            <div class="discord-info">
+                <h3>NRP WRLD</h3>
+                <p>Rejoindre le Discord !</p>
+            </div>
 
-        function updateProgress() {
-            var sent = totalFiles - neededFiles;
-            var percentage = Math.floor((sent / totalFiles) * 100);
-            document.getElementById("progress-file").style.width = percentage + "%";
-        }
+        </a>
+    </div>
 
-        var backgrounds = [
-            "https://i.imgur.com/TDJtSvw.jpeg",
-            "https://www.crunchyroll.com/fr/series/GYQ4MW246/naruto-shippuden?srsltid=AfmBOopfxzuE1R7vrkJFdWp9dLi36A17UnsVyeawTlEHPxb89DHTU4O1",
-            "https://static.wikia.nocookie.net/naruto/images/0/04/Team_Yamato_at_Tenchi_Bridge.png/revision/latest?cb=20221003120655",
-            "https://static0.srcdn.com/wordpress/wp-content/uploads/2018/07/Sasuke-Sakura-and-Naruto.png"
-        ];
-        var randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
-        document.body.style.backgroundImage = "url('" + randomBg + "')";
-    </script>
+</div>
+
+<script>
+const DISCORD_ID_1 = "1250216139775016980";
+const DISCORD_ID_2 = "1387497342353018891";
+
+function fetchDiscordUser(userId, num) {
+    fetch(`https://api.lanyard.rest/v1/users/${userId}`)
+        .then(r => r.json())
+        .then(res => {
+            if (!res.success) return;
+
+            const user = res.data.discord_user;
+            const status = res.data.discord_status;
+
+            document.getElementById(`name-${num}`).innerText = user.global_name || user.username;
+
+            document.getElementById(`avatar-${num}`).src =
+                `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+
+            document.getElementById(`status-${num}`).className = "status-dot " + status;
+        });
+}
+
+fetchDiscordUser(DISCORD_ID_1, 1);
+fetchDiscordUser(DISCORD_ID_2, 2);
+</script>
+
 </body>
 </html>
