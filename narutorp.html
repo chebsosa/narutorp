@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>NarutoRP - Chargement</title>
+    <title>NarutoRP - Chargement Immersif</title>
     <style>
         * {
             box-sizing: border-box;
@@ -12,86 +12,192 @@
         body {
             background: #06060e;
             color: #e6e6f0;
-            font-family: 'Tahoma', sans-serif;
+            font-family: 'Segoe UI', 'Tahoma', sans-serif;
             overflow: hidden;
             height: 100vh;
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
         }
 
-        /* Arrière-plan assombri */
+        /* Ambiance et dégradé cinématique */
         .overlay {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(10, 10, 18, 0.75);
+            background: linear-gradient(135deg, rgba(8, 8, 16, 0.9) 0%, rgba(15, 12, 24, 0.75) 100%);
             z-index: 1;
         }
 
         .content {
             position: relative;
             z-index: 2;
-            padding: 50px;
+            width: 100%;
+            height: 100%;
+            padding: 40px;
             display: flex;
             flex-direction: column;
-            height: 100%;
             justify-content: space-between;
         }
 
+        /* Zone Supérieure : Titre */
         .header {
             text-align: center;
-            margin-top: 50px;
+            margin-top: 10px;
         }
-
         .header h1 {
-            font-size: 48px;
+            font-size: 56px;
             font-weight: 900;
             color: #ff9b28;
             text-transform: uppercase;
-            letter-spacing: 4px;
-            text-shadow: 0 0 15px rgba(220, 90, 20, 0.6);
+            letter-spacing: 6px;
+            text-shadow: 0 0 25px rgba(220, 90, 20, 0.5);
         }
-
         .header p {
-            color: #8c8c94;
+            color: #a0a0b0;
             font-size: 14px;
-            margin-top: 10px;
-            font-weight: 600;
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
-        /* Barre de chargement en bas */
+        /* Zone Centrale : Séparée en 2 colonnes */
+        .main-panels {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            height: 55vh;
+            max-width: 1300px;
+            width: 100%;
+            margin: 0 auto;
+            gap: 40px;
+        }
+
+        .panel {
+            flex: 1;
+            background: rgba(14, 14, 26, 0.65);
+            border: 1px solid rgba(255, 155, 40, 0.15);
+            border-radius: 12px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel h2 {
+            font-size: 20px;
+            color: #ff9b28;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid rgba(220, 90, 20, 0.3);
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Colonne de gauche : Histoire */
+        .lore-container {
+            overflow-y: auto;
+            font-size: 15px;
+            line-height: 1.7;
+            color: #d1d1e0;
+            padding-right: 10px;
+        }
+        .lore-container::-webkit-scrollbar {
+            width: 4px;
+        }
+        .lore-container::-webkit-scrollbar-thumb {
+            background: rgba(220, 90, 20, 0.4);
+            border-radius: 2px;
+        }
+        .lore-paragraph {
+            margin-bottom: 15px;
+        }
+
+        /* Colonne de droite : Fondateurs */
+        .founders-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            justify-content: center;
+            height: 100%;
+        }
+        .card {
+            background: rgba(25, 25, 45, 0.5);
+            border-left: 4px solid #dc5a14;
+            border-radius: 8px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.2s;
+        }
+        .avatar-container {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid rgba(255, 155, 40, 0.4);
+            background: #111224;
+        }
+        .avatar-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .card-info {
+            flex-grow: 1;
+        }
+        .card-info h3 {
+            font-size: 18px;
+            color: #ffffff;
+            margin-bottom: 2px;
+        }
+        .card-info p {
+            font-size: 12px;
+            color: #8c8c94;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Zone Inférieure : Chargement GMod */
         .footer {
             width: 100%;
-            max-width: 800px;
-            margin: 0 auto 50px auto;
+            max-width: 900px;
+            margin: 0 auto;
         }
-
         .status {
-            font-size: 14px;
-            color: #8c8c94;
-            margin-bottom: 10px;
-            font-weight: bold;
+            font-size: 13px;
+            color: #a0a0b0;
+            margin-bottom: 8px;
+            font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
         }
-
+        .progress-container {
+            background: rgba(10, 10, 18, 0.9);
+            border: 1px solid rgba(55, 55, 85, 0.4);
+            border-radius: 30px;
+            padding: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
         .progress-bar {
             width: 100%;
-            height: 12px;
-            background: rgba(15, 15, 28, 0.8);
-            border-radius: 6px;
+            height: 14px;
+            background: transparent;
+            border-radius: 30px;
             overflow: hidden;
-            border: 1px solid rgba(55, 55, 85, 0.5);
         }
-
         .progress-fill {
             width: 0%;
             height: 100%;
-            background: #dc5a14;
-            box-shadow: 0 0 10px #ff9b28;
-            transition: width 0.2s ease-out;
+            background: linear-gradient(90deg, #dc5a14, #ff9b28);
+            box-shadow: 0 0 15px #ff9b28;
+            border-radius: 30px;
+            transition: width 0.3s ease-out;
         }
     </style>
 </head>
@@ -99,30 +205,88 @@
 
     <div class="overlay"></div>
 
+    <!-- L'OST en fond -->
     <audio id="ost" autoplay loop>
         <source src="https://raw.githubusercontent.com/chebsosa/narutorp/main/Naruto%20-%20Afternoon%20of%20Konoha.mp3" type="audio/mpeg">
     </audio>
 
     <div class="content">
+        
+        <!-- HEADER -->
         <div class="header">
             <h1>NINJA WORLD</h1>
-            <p>Préparation du monde des Shinobis...</p>
+            <p>Une nouvelle ère shinobi commence</p>
         </div>
 
+        <!-- BLOCS DE CONTENU -->
+        <div class="main-panels">
+            
+            <!-- BLOC LORE (HISTOIRE) -->
+            <div class="panel">
+                <h2>📜 Chroniques du Serveur</h2>
+                <div class="lore-container">
+                    <p class="lore-paragraph">
+                        Après des décennies de guerres incessantes et sanglantes, un calme fragile s'est installé sur les grandes nations shinobi. Les villages cachés pansent leurs blessures, mais dans l'ombre, les tensions politiques renaissent.
+                    </p>
+                    <p class="lore-paragraph">
+                        Une mystérieuse faction sans allégeance commence à faire parler d'elle, orchestrant des incidents aux frontières pour briser l'équilibre précaire entre Konoha, Suna et les autres contrées.
+                    </p>
+                    <p class="lore-paragraph">
+                        Ici, votre destin n'attend que vous. Deviendrez-vous le rempart protecteur de votre patrie, un ninja médical respecté, ou un déserteur redouté consommé par la vengeance ? Forgez votre propre nindo.
+                    </p>
+                </div>
+            </div>
+
+            <!-- BLOC FONDATEURS -->
+            <div class="panel">
+                <h2>👥 Équipe Fondatrice</h2>
+                <div class="founders-list">
+                    
+                    <!-- Fondateur 1 -->
+                    <div class="card">
+                        <div class="avatar-container">
+                            <img src="https://discordlookup.com/api/v1/user/1250216139775016980/avatar" alt="Avatar Fondateur 1">
+                        </div>
+                        <div class="card-info">
+                            <h3>Fondateur 1</h3>
+                            <p>Fondateur / Développeur</p>
+                        </div>
+                    </div>
+
+                    <!-- Fondateur 2 -->
+                    <div class="card">
+                        <div class="avatar-container">
+                            <img src="https://discordlookup.com/api/v1/user/1387497342353018891/avatar" alt="Avatar Fondateur 2">
+                        </div>
+                        <div class="card-info">
+                            <h3>Fondateur 2</h3>
+                            <p>Fondateur / Gestion</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ZONE DE CHARGEMENT -->
         <div class="footer">
-            <div id="status-text" class="status">Connexion en cours...</div>
-            <div class="progress-bar">
-                <div id="progress-file" class="progress-fill"></div>
+            <div id="status-text" class="status">Initialisation des sceaux de connexion...</div>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div id="progress-file" class="progress-fill"></div>
+                </div>
             </div>
         </div>
+
     </div>
 
     <script>
-        // Gestion de la musique (GMod baisse parfois le volume)
+        // Gestion audio
         var audio = document.getElementById("ost");
-        if(audio) { audio.volume = 0.5; } // Volume à 50%
+        if(audio) { audio.volume = 0.4; } // Volume à 40%
 
-        // Système de détection de fichiers natif de Garry's Mod
+        // Détection de chargement GMod
         var totalFiles = 1;
         var neededFiles = 1;
 
@@ -138,7 +302,7 @@
         }
 
         function DownloadingFile(fileName) {
-            document.getElementById("status-text").innerHTML = "Téléchargement : " + fileName;
+            document.getElementById("status-text").innerHTML = "Téléchargement du parchemin : " + fileName;
         }
 
         function SetStatusChanged(status) {
@@ -151,11 +315,11 @@
             document.getElementById("progress-file").style.width = percentage + "%";
         }
 
-        // IMAGE DE FOND ALÉATOIRE : Tu pourras mettre tes images ici
+        // FONDS D'ÉCRAN AUTOMATIQUES HAUTE DÉFINITION
         var backgrounds = [
-            "https://tes-fichiers.com/fond1.jpg",
-            "https://tes-fichiers.com/fond2.jpg",
-            "https://tes-fichiers.com/fond3.jpg"
+            "https://images.alphacoders.com/605/605584.jpg",
+            "https://images.alphacoders.com/134/1344604.png",
+            "https://images.alphacoders.com/168/168926.jpg"
         ];
         var randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
         document.body.style.backgroundImage = "url('" + randomBg + "')";
